@@ -2,6 +2,7 @@
 import { db } from "@/lib/db/db";
 import { products } from "@/lib/db/schema";
 import { productSchema } from "@/lib/validators/productSchema";
+import { desc } from "drizzle-orm";
 import { writeFile ,unlink} from "fs/promises";
 import path from "path";
 
@@ -60,6 +61,22 @@ export async function POST(request:Request){
 
 }
 
+
+export async function GET(request:Request){
+    try {
+        const allProducts=await db.select().from(products).orderBy(desc(products.id));
+        return Response.json({
+            message:"All products fetched successfully"
+        },{status:201})
+        
+    } catch (error) {
+        console.log(error);
+        return Response.json({message:"Failed to fetch products"},{status:500})
+        
+    }
+}
+
     
+
    
 
