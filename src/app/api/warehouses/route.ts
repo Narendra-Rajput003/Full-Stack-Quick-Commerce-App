@@ -28,3 +28,16 @@ export async  function POST(request:Request){
             
         }
 }
+
+export async function GET(request:Request){
+    try {
+
+       const allwarehouses= await db.select().from(warehouses);
+       return Response.json(allwarehouses);
+        
+    } catch (error) {
+        console.log(error)
+        return Response.json({message:"failed to fetch all warehouses"},{status:500})
+        
+    }
+}
