@@ -1,8 +1,7 @@
 import { sql } from "drizzle-orm";
-import { pgTable ,serial, varchar, text, timestamp, integer, pgEnum } from "drizzle-orm/pg-core";
+import { pgTable ,serial, varchar, text, timestamp, integer ,index} from "drizzle-orm/pg-core";
 
 
-const roleEnum=pgEnum('role', ['admin', 'customer'])
 
 export const users = pgTable("users", {
     id: serial("id").primaryKey(),
@@ -12,7 +11,7 @@ export const users = pgTable("users", {
     provider: varchar("provider", { length: 20 }),
     external_id: varchar("external_id", { length: 100 }).notNull().unique(),
     image: text("image"),
-    role: roleEnum('role').notNull().default('customer'),
+    role: varchar("role", { length: 12 }).notNull().default('customer'),
     updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
     createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`)
 });
@@ -26,3 +25,17 @@ export const products = pgTable("products", {
     updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
     createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`)
 });
+
+
+export const warehouses=pgTable("warehouses",{
+    id:serial('id').primaryKey(),
+    name:varchar('name',{length:100}).notNull(),
+    pincode:varchar('pincode',{length:6}).notNull(),
+    updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
+    createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`)
+},(table)=>{
+    return {
+        pincodeIdx:index("pincode_idx").on(table.pincode),
+    }
+
+})
