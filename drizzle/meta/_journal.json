@@ -15,6 +15,20 @@
       "when": 1727329777473,
       "tag": "0001_handy_viper",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1727454073136,
+      "tag": "0002_small_hitman",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1727589820663,
+      "tag": "0003_magenta_the_santerians",
+      "breakpoints": true
     }
   ]
 }
