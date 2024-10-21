@@ -4,8 +4,6 @@ import postgres from "postgres";
 
 
 const queryString=process.env.DATABASE_URL as string;
-console.log(queryString);
-
 export const connection=postgres(queryString);
 
 export const db=drizzle(connection)

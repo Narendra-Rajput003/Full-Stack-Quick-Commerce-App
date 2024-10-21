@@ -62,17 +62,22 @@ export async function POST(request:Request){
 }
 
 
-export async function GET(request:Request){
+export async function GET(request: Request) {
     try {
-        const allProducts=await db.select().from(products).orderBy(desc(products.id));
+        const allProducts = await db.select().from(products).orderBy(desc(products.id));
+        
         return Response.json({
-            message:"All products fetched successfully"
-        },{status:201})
+            message: "All products fetched successfully",
+            products: allProducts
+        }, { status: 200 })
         
     } catch (error) {
-        console.log(error);
-        return Response.json({message:"Failed to fetch products"},{status:500})
+        console.error("Error fetching products:", error);
         
+        return Response.json({
+            message: "Failed to fetch products",
+            error: error instanceof Error ? error.message : String(error)
+        }, { status: 500 })
     }
 }
 
