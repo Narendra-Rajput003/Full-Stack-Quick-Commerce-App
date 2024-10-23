@@ -10,7 +10,7 @@ export const getAllProducts = async () => {
 
     if (response.status === 200) {
       // Adjust this line to match your API response structure
-      return response.data.data; // Access the data property that contains the product array
+      return response.data.products; // Access the data property that contains the product array
     } else {
       throw new Error("Failed to fetch products");
     }
@@ -19,3 +19,16 @@ export const getAllProducts = async () => {
     throw new Error("Failed to fetch products");
   }
 };
+
+export const createProduct = async (data:any) => {
+  try {
+    const response = await api.post("/product", data);
+    return response.data
+
+  } catch (error) {
+
+    console.error("Error creating products:", error);
+    throw new Error("Failed to create products");
+
+  }
+}

@@ -7,24 +7,35 @@ import { columns } from './columns';
 import { useQuery } from '@tanstack/react-query';
 import { getAllProducts } from '@/http/api';
 import { Product } from '@/types';
+import ProductSheet from './ProductSheet';
+import { useNewProduct } from '@/store/product/product-store';
+import { Loader2 } from 'lucide-react';
 
 function Page() {
-  const { data: products, isLoading, error } = useQuery<Product[]>({
+  const { data: products, isLoading, isError } = useQuery<Product[]>({
     queryKey: ["products"],
     queryFn: getAllProducts,
   });
 
-  // Handle loading and error states
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading products: {error.message}</div>;
+  const { onOpen } = useNewProduct()
+
 
   return (
     <>
-      <div className='flex items-center justify-between py-2'>
+      <div className='flex items-center justify-between '>
         <h3 className='text-2xl font-bold tracking-tight'>Products</h3>
-        <Button size={'sm'}>Add Product</Button>
+        <Button size={'sm'} onClick={onOpen}>Add Product</Button>
+        <ProductSheet />
       </div>
-      <DataTable columns={columns} data={products || []} />
+      {isError && <span className="text-red-500">Something went wrong.</span>}
+
+      {isLoading ? (
+        <div className="flex items-center justify-center">
+          <Loader2 className="size-10 animate-spin" />
+        </div>
+      ) : (
+        <DataTable columns={columns} data={products || []} />
+      )}
     </>
   );
 }
