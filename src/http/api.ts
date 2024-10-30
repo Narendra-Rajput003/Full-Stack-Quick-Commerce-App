@@ -20,9 +20,13 @@ export const getAllProducts = async () => {
   }
 };
 
-export const createProduct = async (data:any) => {
+export const createProduct = async (data:FormData) => {
   try {
-    const response = await api.post("/product", data);
+    const response = await api.post("/product", data,{
+      headers: {
+        'Content-Type': 'multipart/form-data',
+    },
+    });
     return response.data
 
   } catch (error) {

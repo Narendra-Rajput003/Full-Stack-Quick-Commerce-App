@@ -28,10 +28,6 @@ function CreateProductForm({ onSubmit, disabled }: {
 }) {
 
 
-
-
-
-
   const form = useForm<z.infer<typeof productSchema>>({
     resolver: zodResolver(productSchema),
     defaultValues: {

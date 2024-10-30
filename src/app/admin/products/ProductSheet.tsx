@@ -15,7 +15,7 @@ const useCreateProductMutation = () => {
     
   
     return useMutation({
-      mutationFn: createProduct,
+      mutationFn:(data:FormData)=> createProduct(data),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['products'] })
         toast({ title: 'Product created successfully' });
